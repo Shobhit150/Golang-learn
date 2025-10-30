@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	file, err := os.Create("./MyName")
+	file, err := os.Create("./18_files/MyName")
 	if err != nil {
 		panic(err)
 	}
@@ -17,7 +17,7 @@ func main() {
 	}
 	fmt.Println("Length is ", lenght)
 	file.Close()
-	readFile("./MyName")
+	readFile("./18_files/MyName")
 }
 
 func readFile(filename string) {
