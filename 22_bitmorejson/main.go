@@ -13,7 +13,7 @@ type Course struct {
 	Tag []string `json:"tag,omitempty"`
 }
 func main()  {
-	EncodingJson()
+	DecodeJson()
 }
 func EncodingJson()  {
 	lcoCourses := []Course{
@@ -27,4 +27,42 @@ func EncodingJson()  {
 		panic(err)
 	}
 	fmt.Printf("%s",finalJson)
+}
+
+
+func DecodeJson()  {
+	jsonDataFromWeb := []byte(`
+		{
+            "course_name": "React",
+            "price": 12,
+            "platform": "udemy",
+            "tag": [
+                    "Web",
+                    "js"
+            ]
+		}
+	`)
+	var lcoCourse Course
+	checkValid := json.Valid(jsonDataFromWeb)
+
+	if checkValid {
+		fmt.Println("Is is valid")
+		json.Unmarshal(jsonDataFromWeb, &lcoCourse)
+		fmt.Printf("%#v", lcoCourse)
+	}else{
+		fmt.Println("Not valid")
+	}
+
+	// where i want key value pair
+
+	fmt.Print("\n Map here \n")
+	var myonlineData map[string]interface{}
+	json.Unmarshal(jsonDataFromWeb, &myonlineData)
+	fmt.Printf("%#v", myonlineData)
+
+	fmt.Print("\n\n\n\n--------\n")
+	for k,v := range myonlineData {
+		fmt.Printf("Key is %v and value is %v and Type is %T\n", k, v, v)
+	}
+
 }
