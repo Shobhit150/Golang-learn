@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
 func main() {
 	fmt.Println("Web Server......")
 
-	PerformPostJsonRequest()
+	PerformPostFormRequest()
 }
 
 func PerformGetRequest() {
@@ -52,4 +53,23 @@ func PerformPostJsonRequest()  {
 	stringbuilder.Write(content)
 	fmt.Println(stringbuilder.String())
 
+}
+
+func PerformPostFormRequest()  {
+	const myurl = "http://localhost:8000/postform"
+
+	data := url.Values{}
+	data.Add("First", "okay")
+	data.Add("last", "okay")
+
+	res, err := http.PostForm(myurl, data)
+	if err != nil {
+		panic(err)
+	}
+	defer res.Body.Close()
+	content, _ := io.ReadAll(res.Body)
+
+	var stringbuilder strings.Builder
+	stringbuilder.Write(content)
+	fmt.Println(stringbuilder.String())
 }
